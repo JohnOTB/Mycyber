@@ -1,0 +1,4 @@
+# My Cybersecurity Portfolio
+
+## Professional Statement
+"As an analytical and consistent professional driven by strong problem-solving capabilities, I bring a meticulous approach to evaluating complex security environments. My core values are anchored in trustworthiness, confidentiality, and strict adherence to the law and regulatory standards, making me deeply aligned with the security demands of government agencies and secure organizations. What interests me most about a career in cybersecurity is the critical, confidential nature of the work, where safeguarding sensitive information is paramount. By combining my analytical mindset, commitment to compliance, and passion for information protection, I aim to directly support and improve the overall integrity and confidentiality of an organization's security posture."

@@ -1,0 +1,36 @@
+# Portfolio Project: Network Layer Traffic Analysis Report
+
+## Overview
+As a cybersecurity analyst, I investigated a reported network outage where clients were unable to access the website `www.yummyrecipesforme.com` and received a "destination port unreachable" error. I analyzed network traffic logs captured using `tcpdump` to identify the affected protocols and suspect root causes.
+
+---
+
+## Part 1: tcpdump Log Analysis Summary
+
+### Log Observations
+* **Outgoing Traffic:** Initial UDP requests were sent from client IP `192.51.100.15` (port `52444`) targeting DNS server IP `203.0.113.2` on port `53` (`domain`) to resolve `www.yummyrecipesforme.com`.
+* **Incoming Response:** Instead of a DNS resolution response, the client received ICMP error packets from source IP `203.0.113.2`.
+* **Error Message:** The ICMP packet returned the error payload: `udp port 53 unreachable`.
+
+### Key Findings
+1. **Protocols Involved:** 
+   * **UDP (User Datagram Protocol):** Used for DNS lookup queries.
+   * **ICMP (Internet Control Message Protocol):** Used by the network layer to transmit error messages back to the source device.
+   * **DNS (Domain Name System):** The target application layer service.
+2. **Issue Interpretation:** The ICMP error message explicitly indicates that while the network path to the host `203.0.113.2` was reachable, **port 53 was not listening or accepting connections**. This prevented the client browser from resolving the domain name to an IP address, subsequently blocking HTTPS connections to the website.
+
+---
+
+## Part 2: Incident Analysis & Troubleshooting
+
+* **Incident Timeline:** First observed at timestamp `13:24:32.192571`.
+* **Symptom:** Web browsers reported "destination port unreachable" when attempting to load `www.yummyrecipesforme.com`.
+* **Current Status:** Ongoing service disruption for domain name resolution.
+* **Suspected Root Cause:** 
+  * The DNS service daemon (e.g., `named` or BIND) on server `203.0.113.2` has crashed or stopped running.
+  * Alternatively, a firewall rule on server `203.0.113.2` or an intermediate security appliance is blocking incoming UDP port 53 traffic.
+
+### Recommended Next Steps & Remediation
+1. **Verify DNS Service State:** Check if the DNS service daemon is running on server `203.0.113.2` (`systemctl status bind9` or equivalent). Restart the service if down.
+2. **Inspect Firewall Rules:** Verify iptables / firewall configurations on `203.0.113.2` to ensure incoming traffic on UDP port 53 is explicitly allowed.
+3. **Test Domain Resolution:** Run `dig @203.0.113.2 www.yummyrecipesforme.com` or `nslookup` from the client workstation to confirm query resolution after remediation.

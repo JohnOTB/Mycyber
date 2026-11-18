@@ -26,7 +26,7 @@ Critical services were restored first, and the network was fully back after two 
 Proper analysis of attacks helps a lot in handling, resolving, and protecting against them.
 
 ## Files
-- [`incident-report-analysis(1).pdf`](./incident-report-analysis(1).pdf): full incident report
+- [`incident-report-analysis.pdf`](./incident-report-analysis.pdf): full incident report
 
 ## Skills Demonstrated
 NIST CSF, incident response, network security, DoS attack analysis, firewall configuration, IDS/IPS
